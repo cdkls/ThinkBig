@@ -22,9 +22,9 @@ import com.mongodb.MongoOptions;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
 
-@SuppressWarnings("deprecation")
-@Profile("!test")
-@Configuration
+//@SuppressWarnings("deprecation")
+//@Profile("!test")
+//@Configuration
 public class MongoConfig {
 
 	private static final int MONGO_CONNECTION_PER_HOST = 50;
