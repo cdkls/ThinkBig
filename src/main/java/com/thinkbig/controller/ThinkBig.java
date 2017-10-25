@@ -1,6 +1,6 @@
 package com.thinkbig.controller;
 
-public class Helo {
+public class ThinkBig {
     public String getName() {
         return name;
     }

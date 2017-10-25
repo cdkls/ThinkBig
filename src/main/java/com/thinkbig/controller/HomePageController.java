@@ -15,12 +15,12 @@ public class HomePageController {
     
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value ="/welcome", method = RequestMethod.GET)
-    public ResponseEntity<List<Helo>> welcomeMessage(){
-        Helo helo=new Helo();
-        helo.setName("Thing Big");
-        List<Helo> hellos=new ArrayList<>();
-        hellos.add(helo);
-        return new ResponseEntity<List<Helo>>(hellos, HttpStatus.OK);
+    public ResponseEntity<List<ThinkBig>> welcomeMessage(){
+        ThinkBig thinkBig=new ThinkBig();
+        thinkBig.setName("Welcome To ThinkBig");
+        List<ThinkBig> hellos=new ArrayList<>();
+        hellos.add(thinkBig);
+        return new ResponseEntity<List<ThinkBig>>(hellos, HttpStatus.OK);
     }
     
    
