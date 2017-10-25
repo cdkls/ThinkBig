@@ -4,11 +4,11 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.assertj.core.util.Lists;
+import org.assertj.core.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.data.authentication.UserCredentials;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
@@ -17,17 +17,13 @@ import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
-import com.mongodb.Mongo;
-import com.mongodb.MongoOptions;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
-import com.mongodb.WriteConcern;
 
-//@SuppressWarnings("deprecation")
-//@Profile("!test")
-//@Configuration
+@Configuration
 public class MongoConfig {
-
-	private static final int MONGO_CONNECTION_PER_HOST = 50;
 
 	@Value("${think.big.db.mongo.host}")
 	private String mongoHost;
@@ -43,37 +39,41 @@ public class MongoConfig {
 
 	@Value("${think.big.db.mongo.password}")
 	private String mongoPassword;
+	
 
-	@Bean
-	public MongoDbFactory mongoDbFactory() throws UnknownHostException {
-		UserCredentials userCredentials = new UserCredentials(mongoUsername,
-				mongoPassword);
-		return new SimpleMongoDbFactory(thinkBigMongo(), mongoDbName,
-				userCredentials);
-	}
+    @Bean
+    public MongoClient thinkBigMongo() throws UnknownHostException {
+        List<ServerAddress> seeds = new ArrayList<ServerAddress>();
+        seeds.add(new ServerAddress(mongoHost, port));
 
-	@Bean
-	public MongoTemplate mongoTemplate() throws UnknownHostException {
-		MappingMongoConverter mongoConverter = mongoConverter();
-		mongoConverter.afterPropertiesSet();
-		return new MongoTemplate(mongoDbFactory(), mongoConverter);
-	}
+        if(Strings.isNullOrEmpty(mongoUsername)) {
+            return new MongoClient(seeds,
+                    MongoClientOptions.builder().connectionsPerHost(50).build());
+        }
 
-	@Bean
-	public MappingMongoConverter mongoConverter() throws UnknownHostException {
-		MongoMappingContext mappingContext = new MongoMappingContext();
-		DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory());
-		return new MappingMongoConverter(dbRefResolver, mappingContext);
-	}
+        MongoCredential credential = MongoCredential.createCredential(
+                mongoUsername, mongoDbName, mongoPassword.toCharArray());
+        return new MongoClient(seeds, Lists.newArrayList(credential),
+                MongoClientOptions.builder().connectionsPerHost(50).build());
+    }
 
-	@Bean
-	public Mongo thinkBigMongo() throws UnknownHostException {
-		List<ServerAddress> seeds = new ArrayList<ServerAddress>();
-		seeds.add(new ServerAddress(mongoHost, port));
-		MongoOptions mongoOptions = new MongoOptions();
-		mongoOptions.fsync = true;
-		mongoOptions.connectionsPerHost = MONGO_CONNECTION_PER_HOST;
-		mongoOptions.setWriteConcern(WriteConcern.SAFE);
-		return new Mongo(seeds, mongoOptions);
-	}
+    @Bean
+    public MongoDbFactory mongoDbFactory() throws UnknownHostException {
+        return new SimpleMongoDbFactory(thinkBigMongo(), mongoDbName);
+    }
+
+    @Bean
+    public MongoTemplate mongoTemplate() throws UnknownHostException {
+        MappingMongoConverter mongoConverter = mongoConverter();
+        mongoConverter.afterPropertiesSet();
+        return new MongoTemplate(mongoDbFactory(),mongoConverter);
+    }
+
+    @Bean
+    public MappingMongoConverter mongoConverter() throws UnknownHostException {
+        MongoMappingContext mappingContext = new MongoMappingContext();
+        DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory());
+        return new MappingMongoConverter(dbRefResolver, mappingContext);
+    }
+
 }

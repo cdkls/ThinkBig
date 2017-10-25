@@ -43,9 +43,10 @@ public class HomePageController {
     public ResponseEntity<List<Category>> getProducts(){
         List<Category> products=Lists.newArrayList();
         
-        Product dressesproduct = Product.builder().productId("1").categoryId("1").productName("").productColors(Lists.newArrayList("RED"))
-        .productDescription("").productImages(Lists.newArrayList()).productPrice("$99.00").productOfferPrice("$55.00")
-        .productType("").productQuantity(10).productRating(5).productOcassion(Lists.newArrayList()).build();
+        Product dressesproduct = Product.builder().productId("1").categoryId("1").productName("Dress").productColors(Lists.newArrayList("RED"))
+        .productDescription("Wonderful Dresses").productImages(Lists.newArrayList("images/s1.jpg","images/s2.jpg","images/s3.jpg","images/s4.jpg","images/s5.jpg","images/s6.jpg","images/s7.jpg","images/s8.jpg")).productPrice("$99.00").productOfferPrice("$55.00")
+        .productType("Hot").productQuantity(10).productRating(5).productOcassion(Lists.newArrayList("Festival","Party","Nightware")).build();
+        
         Category dresses = Category.builder().categoryId("1").categoryName("Dresses").categoryDescripton("Dresses").categoryProducts(Lists.newArrayList(dressesproduct)).build();
         
         Category sweaters = Category.builder().categoryId("2").categoryName("Sweaters").categoryDescripton("Sweaters").categoryProducts(Lists.newArrayList(dressesproduct)).build();
