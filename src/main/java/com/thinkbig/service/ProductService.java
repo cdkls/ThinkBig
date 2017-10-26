@@ -26,4 +26,8 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product findByCategoryId(String catergoryId) {
+        return productRepository.findByCategoryId(catergoryId);
+    }
+
 }

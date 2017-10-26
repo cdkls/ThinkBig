@@ -34,6 +34,11 @@ public class ProductController {
     public @ResponseBody Product findProductById(@PathVariable("productId") String productId) {
         return productService.findById(productId);
     }
+    
+    @RequestMapping("/products/findByCategoryId/{catergoryId}")
+    public @ResponseBody Product findByCategoryId(@PathVariable("catergoryId") String catergoryId) {
+        return productService.findByCategoryId(catergoryId);
+    }
 
     @RequestMapping("/products/all")
     public @ResponseBody List<Product> findAll() {

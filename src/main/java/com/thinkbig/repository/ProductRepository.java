@@ -14,6 +14,8 @@ import com.thinkbig.model.Product;
 public class ProductRepository {
     
     public static final String PRODUCT_ID = "productId";
+
+    public static final String CATEGORY_ID = "categoryId";
     
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -32,6 +34,12 @@ public class ProductRepository {
     public List<Product> findAll() {
         List<Product> products = mongoTemplate.findAll(Product.class);
         return products;
+    }
+
+    public Product findByCategoryId(String catergoryId) {
+        Criteria criteria = Criteria.where(CATEGORY_ID).is(catergoryId);
+        Product product = mongoTemplate.findOne(new Query(criteria), Product.class);
+        return product;
     }
 
 }
