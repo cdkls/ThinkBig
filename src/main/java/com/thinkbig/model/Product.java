@@ -1,13 +1,21 @@
-package com.thinkbig.pojo;
+package com.thinkbig.model;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Builder
 @Data
+@AllArgsConstructor
+@Document(collection = "Product")
 public class Product {
+    private String _id;
     private String productId;
     private String categoryId;
     private String productName;

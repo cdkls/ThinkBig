@@ -1,4 +1,4 @@
-package com.thinkbig.pojo;
+package com.thinkbig.model;
 
 import java.util.List;
 
