@@ -26,12 +26,12 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/products/add", method = RequestMethod.POST)
-    public @ResponseBody Product addPessoa(@RequestBody Product product) {
+    public @ResponseBody Product addProduct(@RequestBody Product product) {
         return productService.addProduct(product);
     }
 
     @RequestMapping("/products/findById/{productId}")
-    public @ResponseBody Product findPersonById(@PathVariable("productId") String productId) {
+    public @ResponseBody Product findProductById(@PathVariable("productId") String productId) {
         return productService.findById(productId);
     }
 
