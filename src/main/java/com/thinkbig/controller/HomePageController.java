@@ -6,7 +6,6 @@ import java.util.List;
 import org.assertj.core.util.Lists;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.thinkbig.pojo.Category;
 import com.thinkbig.pojo.Product;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 public class HomePageController {
     
