@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.thinkbig.model.Category;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @Ignore
 public class CategoryRepositoryTest{

@@ -13,6 +13,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
+
 import com.thinkbig.model.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -54,7 +57,7 @@ public class ProductRepositoryTest{
     
     
     @Test
-    public void shouldRetrieveGapBrandForGivenBrandId() {
+    public void shouldRetrieveAllProducts() {
         List<Product> products = productRepository.findAll();
         assertThat(products.size(), is(2));
     }
