@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.thinkbig.model.Category;
 import com.thinkbig.model.Product;
 
 @Repository
@@ -40,6 +41,10 @@ public class ProductRepository {
         Criteria criteria = Criteria.where(CATEGORY_ID).is(catergoryId);
         Product product = mongoTemplate.findOne(new Query(criteria), Product.class);
         return product;
+    }
+
+    public void dropCollection() {
+        mongoTemplate.dropCollection(Category.class);        
     }
 
 }

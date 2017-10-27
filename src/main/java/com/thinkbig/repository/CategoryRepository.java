@@ -34,4 +34,8 @@ public class CategoryRepository {
         return categories;
     }
 
+    public void dropCollection() {
+        mongoTemplate.dropCollection(Category.class);
+    }
+
 }
